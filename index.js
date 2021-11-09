@@ -8,6 +8,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('trust proxy', true);
 
+const authRoutes = require('./api/routers/auth.routes');
+
 app.use((req, res, next) => {
     let ip = req.ip;
     ip = ip.substr(ip.lastIndexOf(':') + 1);
@@ -17,6 +19,8 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     next();
 });
+
+authRoutes(app);
 
 app.listen(port, () => {
     console.clear();
