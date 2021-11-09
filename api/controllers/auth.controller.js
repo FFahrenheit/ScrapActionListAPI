@@ -32,6 +32,43 @@ exports.loginWithSSO = async (req, res) => {
     }
 }
 
+exports.loginWithCredentials = async (req, res) => {
+    try {
+        const domain = sso.getDefaultDomain();
+
+        const credentials = { // : UserCredential 
+            domain,
+            user: req.body.login,
+            password: req.body.password,
+        };
+
+        const ssoObject = await sso.connect(credentials);
+
+        if (!ssoObject) {
+            return res.json({
+                ok: false,
+                error: 'Invalid credentials'
+            });
+        }
+
+        if (req.session) {
+            req.session.sso = ssoObject;
+        }
+
+        const resp = await getToken(ssoObject);
+        return res.json({
+            ok: true,
+            ...resp
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({
+            ok: false,
+            error: e
+        });
+    }
+};
 
 const getToken = async (sso) => {
     return new Promise(async (resolve, reject) => {

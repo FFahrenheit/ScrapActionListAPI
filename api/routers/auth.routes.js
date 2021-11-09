@@ -4,7 +4,12 @@ const Auth = require('../controllers/auth.controller'),
 module.exports = (app) => {
     app.route('/auth')
         .get([
-            DomainAuth.verifyWindowsUser,
-            DomainAuth.handleWindowsErrors
-        ], Auth.loginWithSSO);
+            DomainAuth.useCors,
+            DomainAuth.useSession,
+            DomainAuth.verifyWindowsUser
+        ], Auth.loginWithSSO)
+        .post([
+            DomainAuth.useCors,
+            DomainAuth.useSession
+        ], Auth.loginWithCredentials);
 }
