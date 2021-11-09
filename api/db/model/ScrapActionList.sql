@@ -8,7 +8,7 @@ CREATE TABLE problem(
 );
 
 CREATE TABLE client(
-    id VARCHAR(6),
+    id VARCHAR(6) PRIMARY KEY,
     name VARCHAR(30)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE part(
     client VARCHAR(6) NOT NULL
 );
 
-CREATE TABLE user(
+CREATE TABLE users(
     username VARCHAR(30) PRIMARY KEY,
     email VARCHAR(50),
     name VARCHAR(60),
@@ -67,7 +67,7 @@ FOREIGN KEY (part) REFERENCES part(number);
 
 ALTER TABLE issue
 ADD CONSTRAINT FK_issue_originator
-FOREIGN KEY (originator) REFERENCES user(username);
+FOREIGN KEY (originator) REFERENCES users(username);
 
 ALTER TABLE action
 ADD CONSTRAINT FK_action_issue
@@ -75,12 +75,12 @@ FOREIGN KEY (issue) REFERENCES issue(id);
 
 ALTER TABLE action
 ADD CONSTRAINT FK_action_responsible
-FOREIGN KEY (responsible) REFERENCES user(username);
+FOREIGN KEY (responsible) REFERENCES users(username);
 
 ALTER TABLE action
 ADD CONSTRAINT FK_action_department
 FOREIGN KEY (department) REFERENCES department(id);
 
-ALTER TABLE action
+ALTER TABLE department
 ADD CONSTRAINT FK_department_manager
-FOREIGN KEY (manager) REFERENCES user(username);
+FOREIGN KEY (manager) REFERENCES users(username);
