@@ -17,7 +17,9 @@ const verifyUser = (req, res, next) => {
 }
 
 const getUser = (req) =>{
-    return jwt.verify(req.token, process.env.TOKEN_SEED)['username'];
+    const user = jwt.verify(req.token, process.env.TOKEN_SEED)['username'];
+    console.log({ user });
+    return user;
 }
 
 module.exports = {

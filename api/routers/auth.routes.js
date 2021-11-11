@@ -1,5 +1,6 @@
 const Auth = require('../controllers/auth.controller'),
-    DomainAuth = require('../middlewares/domain.auth');
+    DomainAuth = require('../middlewares/domain.auth'),
+    Interceptor = require('../middlewares/auth.interceptor');
 
 module.exports = (app) => {
     app.route('/auth')
@@ -11,5 +12,8 @@ module.exports = (app) => {
         .post([
             DomainAuth.useCors,
             DomainAuth.useSession
-        ], Auth.loginWithCredentials);
+        ], Auth.loginWithCredentials)
+        .put([
+            Interceptor.verifyUser
+        ], Auth.refreshToken);
 }

@@ -1,6 +1,27 @@
 const Sql = require('../db/sql'),
+    Identificador = require('../middlewares/auth.interceptor'),
     jwt = require('jsonwebtoken'),
     { sso } = require('node-expose-sspi');
+
+exports.refreshToken = async (req, res) => {
+    const username = Identificador.getUser(req);
+
+    try {
+        const resp = await getUser({name: username});
+
+        return res.json({
+            ok: true, 
+            ... resp
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send({
+            ok: false,
+            error: e
+        });
+    }
+}
 
 exports.loginWithSSO = async (req, res) => {
     try {
@@ -41,6 +62,8 @@ exports.loginWithCredentials = async (req, res) => {
             user: req.body.login,
             password: req.body.password,
         };
+
+        console.log(credentials);
 
         const ssoObject = await sso.connect(credentials);
 
@@ -90,12 +113,25 @@ const getToken = async (sso) => {
                 reject('Not in domain');
             }
 
-            let query = `SELECT * FROM users WHERE username = '${ user.name }'`
+            const resp = await getUser(user);
+
+            return resolve({
+                ...resp
+            });
+        } catch (e) {
+            return reject(e);
+        }
+    });
+}
+
+let getUser = async (user) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const query = `SELECT * FROM users WHERE username = '${ user.name }'`
             let response = await Sql.request(query);
 
             if (!response || response.length == 0) { //Si no existe el usuario, lo creamos
 
-                created = true;
                 const body = {
                     username: user.name,
                     name: user.displayName,
@@ -111,14 +147,14 @@ const getToken = async (sso) => {
                 console.log(response);
             }
 
-            let bdUser = response[0];
+            const bdUser = response[0];
 
-            let awtInfo = {
+            const awtInfo = {
                 username: bdUser.username,
             };
-
             const token = jwt.sign(awtInfo, process.env.TOKEN_SEED);
-            return resolve({
+
+            resolve({
                 token,
                 user: {
                     username: bdUser.username,
@@ -127,8 +163,10 @@ const getToken = async (sso) => {
                     email: bdUser.email,
                 }
             });
+
         } catch (e) {
-            return reject(e);
+            console.log(e);
+            reject(e);
         }
     });
 }
