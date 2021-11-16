@@ -8,7 +8,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('trust proxy', true);
 
-const authRoutes = require('./api/routers/auth.routes');
+const authRoutes = require('./api/routers/auth.routes'),
+    issuesRoutes = require('./api/routers/issues.routes');
 
 app.use((req, res, next) => {
     let ip = req.ip;
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 });
 
 authRoutes(app);
+issuesRoutes(app);
 
 app.listen(port, () => {
     console.clear();
