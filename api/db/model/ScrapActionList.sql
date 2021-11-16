@@ -38,7 +38,9 @@ CREATE TABLE issue(
     date DATETIME DEFAULT CURRENT_TIMESTAMP,
     problem INT NOT NULL,
     part VARCHAR(40) NOT NULL,
-    originator VARCHAR(30) NOT NULL
+    originator VARCHAR(30) NOT NULL,
+    details TEXT NOT NULL DEFAULT '',
+    evaluation DATE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE action(
