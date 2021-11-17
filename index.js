@@ -1,15 +1,13 @@
 require('dotenv').config();
 
 const express = require('express'),
+    registerRoutes = require('./api/router.register'),
     app = express(),
     port = process.env.PORT || 2903;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('trust proxy', true);
-
-const authRoutes = require('./api/routers/auth.routes'),
-    issuesRoutes = require('./api/routers/issues.routes');
 
 app.use((req, res, next) => {
     let ip = req.ip;
@@ -21,8 +19,7 @@ app.use((req, res, next) => {
     next();
 });
 
-authRoutes(app);
-issuesRoutes(app);
+registerRoutes(app);
 
 app.listen(port, () => {
     console.clear();
