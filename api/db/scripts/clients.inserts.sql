@@ -26,3 +26,6 @@ INSERT INTO client(id, name) VALUES ('EMC', 'Emerson ');
 INSERT INTO client(id, name) VALUES ('TEK', 'Teka ');
 INSERT INTO client(id, name) VALUES ('XEN', 'Xenia');
 INSERT INTO client(id, name) VALUES ('XXX', 'Defaut');
+INSERT INTO client(id, name) VALUES ('FTE', 'FTE Automotive');
+INSERT INTO client(id, name) VALUES ('IMT', 'IMTEC');
+INSERT INTO client(id, name) VALUES ('DAY', 'Daystar');

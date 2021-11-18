@@ -2,13 +2,13 @@ const Sql = require('../db/sql');
 
 exports.getParts = async (req, res) => {
     try {
-        const query = "SELECT * FROM problem ORDER BY description ASC";
-
-        const problems = await Sql.request(query);
-
+        const query = "SELECT * FROM AllParts ORDER BY number ASC";
+        
+        const parts = await Sql.request(query);
+        
         return res.json({
-            ok: true,
-            problems
+            ok: true, 
+            parts
         });
     }
     catch (e) {
