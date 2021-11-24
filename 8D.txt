@@ -1,0 +1,37 @@
+scrap                modificado
+incidente interno    =
+incidente de cliente =  Customer CAR | Date issued | Customer contact + email
+
+* Mantener phase
+
+
+D1 - Equipo
+Core team   (lista de usuarios)
+
+D2 - Descripción
+Customer PN
+PN Description    > Giovanni
+Modo de falla reportado por el cliente
+
+preguntas**
+descripción de problema basado en lo anterior
+
+? repetido
+? cliente final afectado
+? cliente afectado
+
++ archivos
+
+D3 - Contención
+Afecta a otros sitios del cliente? (customer sites) (Y/N) => Cuales sitios? Hay contención? (Y/N)
+Matriz
+Quality Alert (SharePoint)
+
++ archivos
+
+If applicable, are the poka yokes detecting the failure mode?
+*Does not exist
+*Exists and detects failure mode
+*Exists and does not detect failure mode
+
+Are the Containment actions robust enough to prevent recurrence with customer? (Y/N)
