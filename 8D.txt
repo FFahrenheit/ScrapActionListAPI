@@ -2,6 +2,10 @@ scrap                modificado
 incidente interno    =
 incidente de cliente =  Customer CAR | Date issued | Customer contact + email
 
+
+-- Evaluation period
+-- Cambiar la lista de defectos
+
 * Mantener phase
 
 
@@ -18,7 +22,7 @@ descripción de problema basado en lo anterior
 
 ? repetido
 ? cliente final afectado
-? cliente afectado
+nombre cliente afectado ^
 
 + archivos
 
@@ -35,3 +39,40 @@ If applicable, are the poka yokes detecting the failure mode?
 *Exists and does not detect failure mode
 
 Are the Containment actions robust enough to prevent recurrence with customer? (Y/N)
+
+D4
+
+5 por qué (n) 
+* 3 secciones 
+   - Por qué ocurrió?
+   - Por qué no lo detectamos?
+   - Por qué no lo pudimos prevenir?
+
+Hallazgos clave en este incidente
+
+Ishikawa -> Archivo adjunto
+
+Otros análisis / información -> archivos
+
+
+D5 aciones correctivas
+
+Accion | Responsable | Due Date ** | + archivo ==>
+
+D6 
+
+Accion | Responsable | Due Date ** | + archivo | + evidencia | Close date==>
+
+
+D7 Acciones preventivas
+
+Accion | Responsable | Due Date ** | + evidencia | Close date== >
+Checkbox:
+    FMEA was updated?         -> Attachment
+    Control Plan was updated? -> Attachment
+    Read Across was deploy?
+    Lessons learned log was updated?
+
+D8 Recognize team
+
+Cerrar por gerente
