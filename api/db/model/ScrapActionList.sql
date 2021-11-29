@@ -40,7 +40,7 @@ CREATE TABLE issue(
     part VARCHAR(40) NOT NULL,
     originator VARCHAR(30) NOT NULL,
     details TEXT NOT NULL DEFAULT '',
-    evaluation DATE DEFAULT CURRENT_TIMESTAMP,
+    -- evaluation DATE DEFAULT CURRENT_TIMESTAMP,
     type VARCHAR(25) NOT NULL
 );
 
