@@ -22,9 +22,9 @@ descripción de problema basado en lo anterior
 
 ? repetido
 ? cliente final afectado
-nombre cliente afectado ^
+nombre cliente afectado ^ ----- Falta esto
 
-+ archivos
++ archivos ----- Falta esto
 
 D3 - Contención
 Afecta a otros sitios del cliente? (customer sites) (Y/N) => Cuales sitios? Hay contención? (Y/N)
@@ -40,6 +40,8 @@ If applicable, are the poka yokes detecting the failure mode?
 
 Are the Containment actions robust enough to prevent recurrence with customer? (Y/N)
 
+VALIDACIÓN
+
 D4
 
 5 por qué (n) 
@@ -47,7 +49,7 @@ D4
    - Por qué ocurrió?
    - Por qué no lo detectamos?
    - Por qué no lo pudimos prevenir?
-
+-- Mensajes
 Hallazgos clave en este incidente
 
 Ishikawa -> Archivo adjunto
