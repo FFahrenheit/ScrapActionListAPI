@@ -35,13 +35,23 @@ CREATE TABLE department(
 
 CREATE TABLE issue(
     id INT IDENTITY(1,1) PRIMARY KEY,
-    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D0 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D1 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D2 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D3 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D4 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D5 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D6 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D7 DATETIME DEFAULT CURRENT_TIMESTAMP,
+    D8 DATETIME DEFAULT CURRENT_TIMESTAMP,
     problem INT NOT NULL,
     part VARCHAR(40) NOT NULL,
     originator VARCHAR(30) NOT NULL,
     details TEXT NOT NULL DEFAULT '',
+    status VARCHAR(20) DEFAULT 'D0',
     -- evaluation DATE DEFAULT CURRENT_TIMESTAMP,
-    type VARCHAR(25) NOT NULL
+    type VARCHAR(25) NOT NULL,
+    phase VARCHAR(20)
 );
 
 CREATE TABLE action(
@@ -51,6 +61,7 @@ CREATE TABLE action(
     evaluation DATE DEFAULT GETDATE(),
     due DATE DEFAULT NULL,
     closed DATETIME DEFAULT NULL,
+    type VARCHAR(20) DEFAULT 'corrective',
     issue INT NOT NULL,
     responsible VARCHAR(30) NOT NULL,
     department INT NOT NULL
@@ -74,19 +85,18 @@ CREATE TABLE evidence(
 
 CREATE TABLE incident(
     id INT IDENTITY(1,1) PRIMARY KEY,
-    car VARCHAR(30)
+    car VARCHAR(60),
     issued DATE DEFAULT CURRENT_TIMESTAMP,
-    contact VARCHAR(60)
-    email VARCHAR(60)
+    contact VARCHAR(60),
+    email VARCHAR(60),
     issue INT NOT NULL 
 );
-
 
 CREATE TABLE complication(
     id INT IDENTITY(1,1) PRIMARY KEY,
     customerPN VARCHAR(30),
     pnDescription VARCHAR(120),
-    failure VARCHAR(120),
+    failureMode VARCHAR(120),
     whatIs VARCHAR(120),
     whereIs VARCHAR(120),
     whenIs VARCHAR(120),
@@ -97,29 +107,48 @@ CREATE TABLE complication(
     description VARCHAR(240),
     repeated VARCHAR(5),
     finalAffected VARCHAR(5),
-    customerAffected VARCHAR(5),
-    issue INT
+    customerAffected VARCHAR(60),
+    issue INT NOT NULL
 );
 
-ALTER TABLE team
-ADD CONSTRAINT FK_team_member
-FOREIGN KEY (member) REFERENCES users(username);
+CREATE TABLE why(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    question VARCHAR(120),
+    keyFindings VARCHAR(128) DEFAULT '',
+    answers TEXT,
+    issue INT NOT NULL
+);
 
-ALTER TABLE team
-ADD CONSTRAINT FK_team_issue
-FOREIGN KEY (issue) REFERENCES issue(id);
+CREATE TABLE containment(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    others VARCHAR(10),
+    sites VARCHAR(120),
+    containment VARCHAR(30),
+    QA VARCHAR(255),
+    poka VARCHAR(60),
+    robust VARCHAR(30),
+    issue INT NOT NULL
+);
 
-ALTER TABLE evidence
-ADD CONSTRAINT FK_evidence_issue
-FOREIGN KEY (issue) REFERENCES issue(id);
+CREATE TABLE stock(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    description VARCHAR(120),
+    total VARCHAR(40) DEFAULT '0',
+    ok VARCHAR(40) DEFAULT '0',
+    notOk VARCHAR(40) DEFAULT '0',
+    clean DATE DEFAULT CURRENT_TIMESTAMP,
+    issue INT NOT NULL,
+    responsible VARCHAR(30) NOT NULL
+);
 
-ALTER TABLE incident
-ADD CONSTRAINT FK_incident_issue
-FOREIGN KEY (issue) REFERENCES issue(id);
-
-ALTER TABLE complication
-ADD CONSTRAINT FK_complication_issue
-FOREIGN KEY (issue) REFERENCES issue(id);
+CREATE TABLE closure(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    fmea VARCHAR(15),
+    readAcross VARCHAR(15),
+    lessons VARCHAR(15),
+    control VARCHAR(15),
+    issue INT NOT NULL  
+);
 
 ALTER TABLE part
 ADD CONSTRAINT FK_part_client
@@ -152,3 +181,47 @@ FOREIGN KEY (department) REFERENCES department(id);
 ALTER TABLE department
 ADD CONSTRAINT FK_department_manager
 FOREIGN KEY (manager) REFERENCES users(username);
+
+ALTER TABLE team 
+ADD CONSTRAINT FK_team_member
+FOREIGN KEY (member) REFERENCES users(username);
+
+ALTER TABLE team 
+ADD CONSTRAINT FK_team_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE evidence
+ADD CONSTRAINT FK_evidence_author
+FOREIGN KEY (author) REFERENCES users(username);
+
+ALTER TABLE evidence 
+ADD CONSTRAINT FK_evidence_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE incident
+ADD CONSTRAINT FK_incident_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE complication
+ADD CONSTRAINT complication_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE why
+ADD CONSTRAINT why_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE containment 
+ADD CONSTRAINT containment_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE stock
+ADD CONSTRAINT stock_responsible
+FOREIGN KEY (responsible) REFERENCES users(username);
+
+ALTER TABLE stock
+ADD CONSTRAINT stock_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE closure
+ADD CONSTRAINT closure_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
