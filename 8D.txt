@@ -31,6 +31,8 @@ Afecta a otros sitios del cliente? (customer sites) (Y/N) => Cuales sitios? Hay 
 Matriz
 Quality Alert (SharePoint)
 
++ URL QA
+
 + archivos
 
 If applicable, are the poka yokes detecting the failure mode?
@@ -60,6 +62,8 @@ Otros análisis / información -> archivos
 D5 aciones correctivas
 
 Accion | Responsable | Due Date ** | + archivo ==>
+>30 días pedir justificacion obligatoria
+
 
 D6 
 

@@ -1,6 +1,6 @@
-CREATE DATABASE SrapActions;
+CREATE DATABASE ScrapActions;
 
-USE SrapActions;
+USE ScrapActions;
 
 CREATE TABLE problem(
     id INT IDENTITY(1,1) PRIMARY KEY,
