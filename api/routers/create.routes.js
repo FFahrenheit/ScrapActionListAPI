@@ -1,6 +1,7 @@
 const Create = require('../controllers/create.controller');
+const Interceptor = require('../middlewares/auth.interceptor');
 
 module.exports = (app) => {
     app.route('/d0')
-    .post( Create.D0 );
+    .post( [Interceptor.verifyUser ], Create.D0 );
 }
