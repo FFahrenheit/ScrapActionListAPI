@@ -62,6 +62,7 @@ CREATE TABLE action(
     due DATE DEFAULT NULL,
     closed DATETIME DEFAULT NULL,
     type VARCHAR(20) DEFAULT 'corrective',
+    justification VARCHAR(256) DEFAULT NULL,
     issue INT NOT NULL,
     responsible VARCHAR(30) NOT NULL,
     department INT NOT NULL
