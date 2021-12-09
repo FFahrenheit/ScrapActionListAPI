@@ -16,6 +16,16 @@ exports.getIssue = async(req, res) => {
         }
 
         resp = resp[0];
+        let incident = null;
+
+        if(resp['type'] == 'Customer incident'){
+            query = `SELECT * FROM incident WHERE issue = '${id}'`;
+            incident = await Sql.request(query);
+
+            incident = incident && incident.length > 0 ? incident[0] : null;
+        }
+
+        resp.incident = incident;
 
         query = `SELECT d1, d2, d3, d4, d5, d6, d7, d8 FROM issue WHERE id = '${ id }'`;
 
@@ -26,6 +36,7 @@ exports.getIssue = async(req, res) => {
         Object.keys(done).forEach(d => {
             const value = done[d];
             console.log({ d, value });
+            resp[d] = value;
         });
 
         return res.json({
