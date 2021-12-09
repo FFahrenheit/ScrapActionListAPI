@@ -1,10 +1,6 @@
-const Issues = require('../controllers/issue.controller');
-const Interceptor = require('../middlewares/auth.interceptor');
+const Issue = require('../controllers/issue.controller');
 
 module.exports = (app) => {
-    app.route('/issues/all')
-    .get(Issues.getAllIssues);
-
-    app.route('/issues/mine')
-    .get([Interceptor.verifyUser], Issues.getMyIssues)
+    app.route('/issue/:id')
+    .get(Issue.getIssue)
 }
