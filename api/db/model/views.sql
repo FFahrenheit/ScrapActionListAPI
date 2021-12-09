@@ -10,10 +10,13 @@ WHERE department.manager = users.username;
 CREATE OR ALTER VIEW AllIssues AS
 SELECT 
 issue.id, type, phase, status, issue.description, part.area,
+username,
+issue.d0 AS created,
 problem.description AS problem, 
 part.number AS part,
 client.name AS client,
-users.name AS originator
+users.name AS originator,
+COALESCE(d8,d7,d6,d5,d4,d3,d2,d1,d0) AS lastUpdated
 FROM issue, problem, part, client, users
 WHERE problem.id = issue.problem
 AND part.number = issue.part
