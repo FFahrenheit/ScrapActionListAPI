@@ -6,5 +6,8 @@ module.exports = (app) => {
     .post( [Interceptor.verifyUser ], Create.D0 );
 
     app.route('/d1/:id')
-    .post(Create.D1 );
+    .post( Create.D1 );
+
+    app.route('/d2/:id')
+    .post( Create.D2 );
 }
