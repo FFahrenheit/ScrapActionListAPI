@@ -36,6 +36,7 @@ exports.getIssue = async (req, res) => {
         for (const key of Object.keys(done)) {
             const value = done[key];
             console.log({ key, value });
+            
             if (value == null) {
                 resp[key] = null;
                 continue;
@@ -54,6 +55,18 @@ exports.getIssue = async (req, res) => {
                     query = `SELECT * FROM complication WHERE issue = ${ id }`; //Not worth not selecting id nor issue...
                     result = await Sql.request(query);
                     resp[key] = result[0] || {};
+                    break;
+                case 'd3':
+                    query = `SELECT id, description, total, ok, notOk, clean, responsible, 
+                        users.name as responsibleName FROM stock, users
+                        WHERE users.username = stock.responsible AND stock.issue = '${ id }'`;
+                    result = await Sql.request(query);
+                    resp[key] = { stocks: result };
+                    
+                    query = `SELECT id, others, sites, containment, QA, poka, robust 
+                        FROM containment WHERE issue = '${ id }'`;
+                    result = await Sql.request(query);
+                    resp[key].containment = result[0];
                     break;
                 default:
                     resp[key] = { message: "Not yet implemented" };

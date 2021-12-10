@@ -10,4 +10,7 @@ module.exports = (app) => {
 
     app.route('/d2/:id')
     .post( Create.D2 );
+
+    app.route('/d3/:id')
+    .post( Create.D3 );
 }
