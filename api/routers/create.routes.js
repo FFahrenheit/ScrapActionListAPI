@@ -13,4 +13,7 @@ module.exports = (app) => {
 
     app.route('/d3/:id')
     .post( Create.D3 );
+
+    app.route('/d4/:id')
+    .post( Create.D4 );
 }

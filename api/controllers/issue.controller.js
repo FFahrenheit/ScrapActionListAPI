@@ -68,6 +68,12 @@ exports.getIssue = async (req, res) => {
                     result = await Sql.request(query);
                     resp[key].containment = result[0];
                     break;
+                case 'd4':
+                    query = `SELECT id, question, answers, keyFindings 
+                        FROM why WHERE issue = '${ id }'`;
+                    result = await Sql.request(query);
+                    resp[key] = { why: result };
+                    break;
                 default:
                     resp[key] = { message: "Not yet implemented" };
             }
