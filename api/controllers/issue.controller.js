@@ -76,7 +76,7 @@ exports.getIssue = async (req, res) => {
                     resp[key] = { why: result };
                     break;
                 case 'd5':
-                    query = `SELECT action.id, description, evaluation, due, closed, issue, responsible, 
+                    query = `SELECT action.id, description, evaluation, due, closed, issue, responsible, status,
                     users.name as responsibleName, department, department.name as departmentName, justification 
                     FROM action, department, users WHERE users.username = action.responsible 
                     AND department.id = action.department AND action.issue = '${ id }'`;
