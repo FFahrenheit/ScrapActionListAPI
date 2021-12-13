@@ -16,6 +16,7 @@ exports.getIssue = async (req, res) => {
         }
 
         resp = resp[0];
+        resp.d0 = { done: resp.created };
         let incident = null;
 
         if (resp['type'] == 'Customer incident') {
@@ -73,6 +74,14 @@ exports.getIssue = async (req, res) => {
                         FROM why WHERE issue = '${ id }'`;
                     result = await Sql.request(query);
                     resp[key] = { why: result };
+                    break;
+                case 'd5':
+                    query = `SELECT action.id, description, evaluation, due, closed, issue, responsible, 
+                    users.name as responsibleName, department, department.name as departmentName, justification 
+                    FROM action, department, users WHERE users.username = action.responsible 
+                    AND department.id = action.department AND action.issue = '${ id }'`;
+                    result = await Sql.request(query);
+                    resp[key] = { actions: result };
                     break;
                 default:
                     resp[key] = { message: "Not yet implemented" };
