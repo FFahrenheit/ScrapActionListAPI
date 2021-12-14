@@ -28,6 +28,12 @@ exports.getIssue = async (req, res) => {
 
         resp.incident = incident;
 
+        query = `SELECT id, description, filename, date, author, users.name as authorName, issue
+            FROM evidence, users WHERE issue = '${ id }' AND users.username = author`;
+
+        let resources = await Sql.request(query);
+        resp.resources = resources;
+
         query = `SELECT d1, d2, d3, d4, d5, d6, d7, d8 FROM issue WHERE id = '${id}'`;
 
         let done = await Sql.request(query);

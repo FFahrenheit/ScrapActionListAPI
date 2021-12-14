@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     },
     filename: async(req, file, callback) => {
         const { issue, d} = req.params;
-        const id = String(Number(new Date())).substring(0,5);
+        const id = String(Number(new Date())).slice(-5);
         const filename = `Issue-${ issue }_${ d }_${ id }_${ file.originalname }`;
         console.log(filename);
         callback(null, filename);

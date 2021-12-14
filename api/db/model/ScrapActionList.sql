@@ -79,7 +79,7 @@ CREATE TABLE evidence(
     id INT IDENTITY(1,1) PRIMARY KEY,
     description VARCHAR(120) DEFAULT 'evidence',
     filename VARCHAR(255),
-    date DATE DEFAULT CURRENT_TIMESTAMP,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
     issue INT NOT NULL,
     author VARCHAR(30)
 );
