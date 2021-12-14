@@ -5,10 +5,9 @@ const multer = require('multer'),
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        const { issue, d} = req.params;
-        console.log({issue, d});
+        const issue = req.params.issue;
 
-        const folder = `Issues/${ issue }/${d}`;
+        const folder = `Issues/${ issue }`;
         const path = `${__dirname}/../../upload/${folder}`;
         
         fs.mkdirSync(path, { recursive: true });
@@ -18,8 +17,8 @@ const storage = multer.diskStorage({
     },
     filename: async(req, file, callback) => {
         const { issue, d} = req.params;
-
-        const filename = `Issue-${issue}_${d}_${Number(new Date())}_${file.originalname}`;
+        const id = String(Number(new Date())).substring(0,5);
+        const filename = `Issue-${ issue }_${ d }_${ id }_${ file.originalname }`;
         console.log(filename);
         callback(null, filename);
     }

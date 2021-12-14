@@ -4,4 +4,7 @@ const Interceptor = require('../middlewares/auth.interceptor');
 module.exports = (app) => {
     app.route('/upload/:issue/:d')
     .post( [ Interceptor.verifyUser ], File.uploadFiles);
+
+    app.route('/upload/:issue/:filename')
+    .get( File.getFiles );
 };
