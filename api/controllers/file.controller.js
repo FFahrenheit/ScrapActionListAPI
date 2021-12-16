@@ -45,7 +45,7 @@ exports.uploadFiles = async (req, res) => {
 
         if (req.files.length <= 0) {
             return res.json({
-                ok: false,
+                ok: true,
                 message: 'You must select at least 1 file'
             });
         }
