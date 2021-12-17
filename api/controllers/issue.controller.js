@@ -85,9 +85,24 @@ exports.getIssue = async (req, res) => {
                     query = `SELECT action.id, description, evaluation, due, closed, issue, responsible, status,
                     users.name as responsibleName, department, department.name as departmentName, justification 
                     FROM action, department, users WHERE users.username = action.responsible 
-                    AND department.id = action.department AND action.issue = '${ id }'`;
+                    AND department.id = action.department AND action.issue = '${ id }' AND type = 'corrective'`;
                     result = await Sql.request(query);
                     resp[key] = { actions: result };
+                    break;
+                case 'd6':
+                    resp[key] = { actions: 'Check actions on D5' };
+                    break;
+                case 'd7':
+                    query = `SELECT action.id, description, evaluation, due, closed, issue, responsible, status,
+                    users.name as responsibleName, department, department.name as departmentName, justification 
+                    FROM action, department, users WHERE users.username = action.responsible 
+                    AND department.id = action.department AND action.issue = '${ id }' AND type = 'preventive'`
+                    result = await Sql.request(query);
+                    resp[key] = { actions: result };
+
+                    query = `SELECT id, fmea, readAcross, lessons, control FROM closure WHERE issue = '${id}'`;
+                    result = await Sql.request(query);
+                    resp[key].closure = result[0] || null;
                     break;
                 default:
                     resp[key] = { message: "Not yet implemented" };

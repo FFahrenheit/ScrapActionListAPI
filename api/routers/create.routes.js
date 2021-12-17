@@ -19,4 +19,7 @@ module.exports = (app) => {
 
     app.route('/d5/:id')
     .post( Create.D5 );
+
+    app.route('/d7/:id')
+    .post( Create.D7 );
 }

@@ -1,6 +1,40 @@
 const Sql = require('../db/sql');
 const Interceptor = require('../middlewares/auth.interceptor');
 
+exports.D7 = async(req, res) => {
+    try{
+        const id = Sql.parseField(req.params.id);
+        let { actions, closure } = req.body;
+        actions = actions.map(a => ({...a, issue: id})); //In case we don't receive the issue
+        closure.issue = id;
+
+        console.log({closure, actions});
+
+        let query = "INSERT INTO action() VALUES ?";
+        await Sql.query(query, actions);
+
+        query = "INSERT INTO closure() VALUES ?";
+        await Sql.query(query, closure);
+
+        query = `UPDATE issue 
+            SET d7 = CURRENT_TIMESTAMP,
+            status = 'D7'
+            WHERE id = '${ id }'`;
+
+        await Sql.request(query);
+
+        return res.json({
+            ok: true
+        });
+    }catch(e){
+        console.log(e);
+        return res.status(500).send({
+            ok: false,
+            error: e
+        });
+    }
+};
+
 exports.D5 = async(req, res) => {
     try{
         const id = Sql.parseField(req.params.id);
