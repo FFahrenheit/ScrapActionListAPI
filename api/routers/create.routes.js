@@ -3,7 +3,7 @@ const Interceptor = require('../middlewares/auth.interceptor');
 
 module.exports = (app) => {
     app.route('/d0')
-    .post( [Interceptor.verifyUser ], Create.D0 );
+    .post( [Interceptor.verifyUser], Create.D0 );
 
     app.route('/d1/:id')
     .post( Create.D1 );
@@ -22,4 +22,7 @@ module.exports = (app) => {
 
     app.route('/d7/:id')
     .post( Create.D7 );
+
+    app.route('/d8/:id')
+    .post( [Interceptor.verifyUser], Create.D8 );
 }

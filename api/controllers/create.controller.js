@@ -1,6 +1,31 @@
 const Sql = require('../db/sql');
 const Interceptor = require('../middlewares/auth.interceptor');
 
+exports.D8 = async(req, res) => {
+    try{
+        const id = Sql.parseField(req.params.id);
+        const username = Sql.parseField(Interceptor.getUser(req));
+
+        query = `UPDATE issue 
+            SET d8 = CURRENT_TIMESTAMP,
+            status = 'D8',
+            closedBy = '${ username }'
+            WHERE id = '${ id }'`;
+
+        await Sql.request(query);
+
+        return res.json({
+            ok: true
+        });
+    }catch(e){
+        console.log(e);
+        return res.status(500).send({
+            ok: false,
+            error: e
+        });
+    }
+}
+
 exports.D7 = async(req, res) => {
     try{
         const id = Sql.parseField(req.params.id);

@@ -104,6 +104,12 @@ exports.getIssue = async (req, res) => {
                     result = await Sql.request(query);
                     resp[key].closure = result[0] || null;
                     break;
+                case 'd8':
+                    query = `SELECT name as closedName, email as closedEmail, closedBy, d8 as closedDate 
+                    FROM users, issue WHERE id = '${ id }' AND users.username = issue.closedBy`;
+                    result = await Sql.request(query);
+                    resp[key] = result[0] || {};
+                    break;
                 default:
                     resp[key] = { message: "Not yet implemented" };
             }
