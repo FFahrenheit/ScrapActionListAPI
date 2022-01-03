@@ -51,7 +51,8 @@ CREATE TABLE issue(
     status VARCHAR(20) DEFAULT 'D0',
     -- evaluation DATE DEFAULT CURRENT_TIMESTAMP,
     type VARCHAR(25) NOT NULL,
-    phase VARCHAR(20)
+    phase VARCHAR(20),
+    closedBy VARCHAR(30) DEFAULT NULL,
 );
 
 CREATE TABLE action(
@@ -166,6 +167,10 @@ FOREIGN KEY (part) REFERENCES part(number);
 ALTER TABLE issue
 ADD CONSTRAINT FK_issue_originator
 FOREIGN KEY (originator) REFERENCES users(username);
+
+ALTER TABLE issue
+ADD CONSTRAINT FK_issue_closedBy
+FOREIGN KEY (closedBy) REFERENCES users(username);
 
 ALTER TABLE action
 ADD CONSTRAINT FK_action_issue

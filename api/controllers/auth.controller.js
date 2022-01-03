@@ -127,7 +127,7 @@ const getToken = async (sso) => {
 let getUser = async (user) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const query = `SELECT * FROM users WHERE username = '${ user.name }'`
+            let query = `SELECT * FROM users WHERE username = '${ user.name }'`
             let response = await Sql.request(query);
 
             if (!response || response.length == 0) { //Si no existe el usuario, lo creamos
@@ -139,7 +139,7 @@ let getUser = async (user) => {
                     position: 'user',
                 };
 
-                let query = 'INSERT INTO users() VALUES ?';
+                query = 'INSERT INTO users() VALUES ?';
 
                 await Sql.query(query, body);
 
@@ -154,6 +154,9 @@ let getUser = async (user) => {
             };
             const token = jwt.sign(awtInfo, process.env.TOKEN_SEED);
 
+            query = `SELECT name FROM department WHERE manager = '${bdUser.username }'`
+            const manager = await Sql.request(query);
+
             resolve({
                 token,
                 user: {
@@ -161,6 +164,7 @@ let getUser = async (user) => {
                     position: bdUser.position,
                     name: bdUser.name,
                     email: bdUser.email,
+                    manager: manager
                 }
             });
 

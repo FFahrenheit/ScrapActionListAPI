@@ -48,7 +48,7 @@ exports.D5 = async(req, res) => {
         query = `UPDATE issue 
             SET d5 = CURRENT_TIMESTAMP,
             status = 'D5'
-            WHERE id = '${ id }'`;
+            WHERE id = '${ id }' AND d5 IS NULL`;
         await Sql.request(query);
 
         return res.json({
