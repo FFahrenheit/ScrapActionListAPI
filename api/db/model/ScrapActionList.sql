@@ -90,6 +90,7 @@ CREATE TABLE incident(
     car VARCHAR(60),
     issued DATE DEFAULT CURRENT_TIMESTAMP,
     contact VARCHAR(60),
+    category VARCHAR(30),
     email VARCHAR(60),
     issue INT NOT NULL 
 );

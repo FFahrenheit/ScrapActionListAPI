@@ -1,7 +1,7 @@
-D3 en limbo por QA
-Muestre preventiva / correctiva al cerrar
-d7 actualiza a d6
-actualizar gerentes limpiar select
+D3 en limbo por QA - done (typo)
+Muestre preventiva / correctiva al cerrar - done (+ condiciones)
+d7 actualiza a d6 - done (logica del backend)
+actualizar gerentes limpiar select - done
 D8 cerrar forzosamente por 
 *** Rodrigo (Quality Manager)
 *** Martha (QMS)

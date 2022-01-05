@@ -10,21 +10,29 @@ exports.closeAction = async(req, res) => {
             closed = CURRENT_TIMESTAMP,
             status = 'closed'  
             WHERE id = '${ id }'`;
+        
+        await Sql.request(query);
 
-        const actions = await Sql.request(query);
+        query = `SELECT type FROM action WHERE id = '${ id }'`;
 
-        query = `UPDATE issue 
-            SET d6 = CURRENT_TIMESTAMP,
-            status = 'D6'
-            WHERE id = '${ issue }' AND 
-            (SELECT COUNT(*) FROM action WHERE issue = '${ issue }') =
-            (SELECT COUNT(*) FROM action WHERE issue = '${ issue }' AND status = 'closed')`;
+        let type = await Sql.request(query);
+        type = type[0]['type'];
+
+        console.log({type});
+
+        if(type == 'corrective'){
+            query = `UPDATE issue 
+                SET d6 = CURRENT_TIMESTAMP,
+                status = 'D6'
+                WHERE id = '${ issue }' AND 
+                (SELECT COUNT(*) FROM action WHERE issue = '${ issue }' AND type = 'corrective') =
+                (SELECT COUNT(*) FROM action WHERE issue = '${ issue }' AND status = 'closed' AND type = 'corrective')`;
+        }
 
         await Sql.request(query);
-            
+        
         return res.json({
             ok: true,
-            actions
         });
     }
     catch (e) {
