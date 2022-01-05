@@ -1,0 +1,14 @@
+D3 en limbo por QA
+Muestre preventiva / correctiva al cerrar
+d7 actualiza a d6
+actualizar gerentes limpiar select
+D8 cerrar forzosamente por 
+*** Rodrigo (Quality Manager)
+*** Martha (QMS)
+==============================================
+
+Aviso de que se crearon acciones
+
+5 días antes - Normal
+Día que vence + 1 - Responsable y gerente
+L y V - Responsable y gerente (>dia + 1)

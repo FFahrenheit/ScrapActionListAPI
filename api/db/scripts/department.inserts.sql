@@ -1,5 +1,5 @@
 INSERT INTO department(name, manager) VALUES ('Quality', 'r.gomez');
-INSERT INTO department(name, manager) VALUES ('NPI', 'mario.sanchez');
+INSERT INTO department(name, manager) VALUES ('NPI', 'Mario.Sanchez');
 INSERT INTO department(name, manager) VALUES ('Auomation', 'Set.Guzman');
 INSERT INTO department(name, manager) VALUES ('Engineering', 'Abiu.Esparza');
 INSERT INTO department(name, manager) VALUES ('Maintenance', 'jorge.torres');
