@@ -52,7 +52,6 @@ CREATE TABLE issue(
     -- evaluation DATE DEFAULT CURRENT_TIMESTAMP,
     type VARCHAR(25) NOT NULL,
     phase VARCHAR(20),
-    closedBy VARCHAR(30) DEFAULT NULL,
 );
 
 CREATE TABLE action(
@@ -153,6 +152,13 @@ CREATE TABLE closure(
     issue INT NOT NULL  
 );
 
+CREATE TABLE authorizations(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    manager VARCHAR(30) NOT NULL,
+    issue INT NOT NULL,
+);
+
 ALTER TABLE part
 ADD CONSTRAINT FK_part_client
 FOREIGN KEY (client) REFERENCES client(id);
@@ -169,9 +175,6 @@ ALTER TABLE issue
 ADD CONSTRAINT FK_issue_originator
 FOREIGN KEY (originator) REFERENCES users(username);
 
-ALTER TABLE issue
-ADD CONSTRAINT FK_issue_closedBy
-FOREIGN KEY (closedBy) REFERENCES users(username);
 
 ALTER TABLE action
 ADD CONSTRAINT FK_action_issue
@@ -232,3 +235,11 @@ FOREIGN KEY (issue) REFERENCES issue(id);
 ALTER TABLE closure
 ADD CONSTRAINT closure_issue
 FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE authorizations
+ADD CONSTRAINT authorization_issue
+FOREIGN KEY (issue) REFERENCES issue(id);
+
+ALTER TABLE authorizations
+ADD CONSTRAINT authorization_manager
+FOREIGN KEY (manager) REFERENCES users(username);
