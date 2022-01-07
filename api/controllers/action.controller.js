@@ -48,7 +48,9 @@ exports.getMyActions = async (req, res) => {
     try {
         const username = Identificator.getUser(req);
 
-        const query = `SELECT * FROM ActionDetails WHERE responsible = '${username}'`;
+        const query = `SELECT * FROM ActionDetails 
+        WHERE responsible = '${username}'
+        AND status <> 'closed'`;
 
         const actions = await Sql.request(query);
 
