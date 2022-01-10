@@ -4,6 +4,9 @@ exports.issueFilters = (obj) => {
         let filter;
         const value = obj[key];
         switch (key) {
+            case 'id':
+                filter =  `id = '${ value }'`;
+                break;
             case 'customer':
                 filter = `client = '${ value }'`
                 break;

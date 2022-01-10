@@ -27,7 +27,8 @@ CREATE OR ALTER VIEW ActionDetails AS
 SELECT action.id, action.description, action.type, action.status,  
 evaluation, due, closed, department, justification, responsible, users.name as responsibleName,
 department.name as departmentName, issue.id as issueId, issue.status as issueStatus, 
-issue.type as issueType, issue.client, issue.originator, issue.phase, issue.part
+issue.type as issueType, issue.client, issue.phase, issue.part,
+issue.username as originator, issue.originator as originatorName
 FROM action, department, AllIssues as issue, users
 WHERE action.department = department.id
 AND issue.id = action.issue

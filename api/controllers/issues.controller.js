@@ -7,10 +7,10 @@ exports.getMyIssues = async(req, res) => {
         const user = Sql.parseField(Interceptor.getUser(req));
         let query;
         if(Sql.hasQuery(req)){
-            return res.json({
-                ok: true,
-                error: 'Not yet implemented :('
-            });
+            console.log(req.query);
+            let filters = Filters.issueFilters(req.query);
+            query = `SELECT * FROM AllIssues 
+            WHERE username = '${ user }' AND ${ filters } ORDER BY created DESC`;
         }else{
             query = `SELECT TOP 100 * FROM AllIssues 
             WHERE username = '${ user }' ORDER BY created DESC`;
@@ -37,7 +37,8 @@ exports.getAllIssues = async(req, res) => {
         if(Sql.hasQuery(req)){
             console.log(req.query);
             let filters = Filters.issueFilters(req.query);
-            query = `SELECT TOP 100 * FROM AllIssues WHERE ${ filters } ORDER BY created DESC`;
+            query = `SELECT * FROM AllIssues 
+            WHERE ${ filters } ORDER BY created DESC`;
         }else{
             query = `SELECT TOP 100 * FROM AllIssues ORDER BY created DESC`;
         }
