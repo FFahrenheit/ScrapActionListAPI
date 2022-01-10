@@ -107,6 +107,7 @@ CREATE TABLE complication(
     much VARCHAR(120),
     often VARCHAR(120),
     description VARCHAR(240),
+    incidentType VARCHAR(30) DEFAULT 'N/A',
     repeated VARCHAR(5),
     finalAffected VARCHAR(5),
     customerAffected VARCHAR(60),
