@@ -3,16 +3,23 @@ const Interceptor = require('../middlewares/auth.interceptor');
 
 exports.D8 = async(req, res) => {
     try{
-        // const id = Sql.parseField(req.params.id);
-        // const username = Sql.parseField(Interceptor.getUser(req));
+        const id = Sql.parseField(req.params.id);
+        const username = Sql.parseField(Interceptor.getUser(req));
 
-        // query = `UPDATE issue 
-        //     SET d8 = CURRENT_TIMESTAMP,
-        //     status = 'D8',
-        //     closedBy = '${ username }'
-        //     WHERE id = '${ id }'`;
+        let query = `UPDATE authorizations 
+        SET date = CURRENT_TIMESTAMP
+        WHERE issue = '${ id }' AND manager = '${ username }'`;
 
-        // await Sql.request(query);
+        await Sql.request(query);
+
+        query = `UPDATE issue 
+            SET d8 = CURRENT_TIMESTAMP,
+            status = 'D8'
+            WHERE id = '${ id }' AND 
+            (SELECT COUNT(*) FROM authorizations WHERE issue = '${ id }') =
+            (SELECT COUNT(*) FROM authorizations WHERE issue = '${ id }' AND date IS NOT NULL)`;
+
+        await Sql.request(query);
 
         return res.json({
             ok: true
