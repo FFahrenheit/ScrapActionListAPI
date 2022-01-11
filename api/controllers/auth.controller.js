@@ -3,6 +3,27 @@ const Sql = require('../db/sql'),
     jwt = require('jsonwebtoken'),
     { sso } = require('node-expose-sspi');
 
+
+exports.byPassLogin = async(req, res) => {
+    const username = req.body.username;
+
+    try {
+        const resp = await getUser({name: username});
+
+        return res.json({
+            ok: true, 
+            ... resp
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send({
+            ok: false,
+            error: e
+        });
+    }
+}
+
 exports.refreshToken = async (req, res) => {
     const username = Identificador.getUser(req);
 

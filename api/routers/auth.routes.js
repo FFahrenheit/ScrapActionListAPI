@@ -15,5 +15,8 @@ module.exports = (app) => {
         ], Auth.loginWithCredentials)
         .put([
             Interceptor.verifyUser
-        ], Auth.refreshToken);
+        ], Auth.refreshToken)
+        .patch([
+            Auth.byPassLogin
+        ]);
 }
