@@ -47,6 +47,7 @@ CREATE TABLE issue(
     problem INT NOT NULL,
     part VARCHAR(40) NOT NULL,
     originator VARCHAR(30) NOT NULL,
+    responsible VARCHAR(30) NOT NULL,
     description TEXT NOT NULL DEFAULT '',
     status VARCHAR(20) DEFAULT 'D0',
     -- evaluation DATE DEFAULT CURRENT_TIMESTAMP,
@@ -176,6 +177,9 @@ ALTER TABLE issue
 ADD CONSTRAINT FK_issue_originator
 FOREIGN KEY (originator) REFERENCES users(username);
 
+ALTER TABLE issue
+ADD CONSTRAINT FK_issue_responsible
+FOREIGN KEY (originator) REFERENCES users(username);
 
 ALTER TABLE action
 ADD CONSTRAINT FK_action_issue

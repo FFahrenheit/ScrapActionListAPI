@@ -10,12 +10,12 @@ exports.getMyIssues = async(req, res) => {
             console.log(req.query);
             let filters = Filters.issueFilters(req.query);
             query = `SELECT * FROM AllIssues 
-            WHERE (username = '${ user }'  OR (
+            WHERE (username = '${ user }' OR responsible = '${ user }' OR (
                 '${ user }' IN (SELECT manager FROM authorizations WHERE issue = AllIssues.id AND authorizations.date IS NULL))
                 ) AND ${ filters } ORDER BY created DESC`;
         }else{
             query = `SELECT TOP 100 * FROM AllIssues 
-            WHERE (username = '${ user }'  OR (
+            WHERE (username = '${ user }' OR responsible = '${ user }' OR (
                 '${ user }' IN (SELECT manager FROM authorizations WHERE issue = AllIssues.id AND authorizations.date IS NULL))
             ) ORDER BY created DESC`;
         }

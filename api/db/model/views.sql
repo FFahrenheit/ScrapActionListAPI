@@ -10,7 +10,8 @@ WHERE department.manager = users.username;
 CREATE OR ALTER VIEW AllIssues AS
 SELECT 
 issue.id, type, phase, status, issue.description, part.area,
-username,
+username, responsible,
+(SELECT name FROM users WHERE username = responsible) as responsibleName,
 issue.d0 AS created,
 problem.description AS problem, 
 part.number AS part,
